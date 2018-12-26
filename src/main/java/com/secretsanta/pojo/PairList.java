@@ -7,7 +7,7 @@ import com.secretsanta.exceptions.NameNotFoundException;
 
 public class PairList {
 	private ArrayList<Pair> pairs;
-
+        private StringBuffer strBuff;
 	public PairList() {
 		this.pairs = new ArrayList<Pair>();
 
@@ -54,9 +54,10 @@ public class PairList {
 	
 	@Override
 	public String toString() {
+        strBuff = new StringBuffer();
 		for (Pair p:pairs){
-			System.out.println("Santa Clause  "+p.getSantaName()+ "("+p.getSantaLocation()+")" +":  Receipient Name " +p.getRecipientName()+ "("+ p.getRecipientLocation()+")");
+			strBuff.append("Santa Clause (From) "+p.getSantaName()+ "("+p.getSantaLocation()+")" +":  (Secret) Receipient Name " +p.getRecipientName()+ "("+ p.getRecipientLocation()+")\n");
 		}
-		return "PairList [pairs=" + pairs + "]";
+		return strBuff.toString();
 	}
 }

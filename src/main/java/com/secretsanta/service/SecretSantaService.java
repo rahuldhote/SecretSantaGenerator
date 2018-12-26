@@ -2,6 +2,7 @@ package com.secretsanta.service;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.Random;
 
@@ -30,31 +31,27 @@ public class SecretSantaService {
 	}
 
 	public static void main(String[] argv) {
-		// Secret_Santa secret_Santa = new Secret_Santa();
-		// secret_Santa.setPairs();
-		// sendMail(secret_Santa.getPeople(),secret_Santa.getReferences());
 
 	}
 
-	/*private static void sendMail(ArrayList<Person> people2, PairList pairList) {
+	public void sendMail(ArrayList<SecretSantaMember> people2, PairList pairList) {
 		String email;
 		String n = "null";
-		for (Person p : people2) {
+		for (SecretSantaMember p : people2) {
 			email = p.getEmail();
 			try {
 				n = pairList.findRecipient(p.getName());
-				// TODO - Prepare content using Name.
 			} catch (NameNotFoundException e) {
-				// TODO
 				e.printStackTrace();
 			}
 			if (email != null && !email.isEmpty()) {
 				MailUtils.sendMail(email, "Twinkle Twinkle Little Star",
-						"Your Gift is under way");
+						"Hello "+p.getName()+",\n Your Participation is appreciated in Secret Santa Game.\n We alway's believe in giving. On the Ocassion of Christmas, you share your blessing's and good wishes to Mr/Mrs: " +n+ "\n\n\n God Bless you!!");
 			}
 		}
+		MailUtils.sendMailRecord(MailUtils.username, "Secret Santa Event Occured On :: "+new Date(),pairList.toString());
 
-	}*/
+	}
 
 	public void setName(String name) throws NameAlreadyExistsException {
 		if (this.people.contains(name))
@@ -118,20 +115,16 @@ public class SecretSantaService {
 			ok = false;
 
 			for (i = 0; i < size; i++) {
-				System.out.println(i);
 				Pair p = new Pair(people.get(i), shuffle.get(i));
 				references.add(p);
 
 			}
 			boolean dupes = checkForDuplicates(references);
-			System.out.println("Any duplicates ?" + !dupes);
 			if (checkForDuplicates(references)
 					&& checkForDuplicateLocation(references))
 				ok = true;
-		}
-		System.out.println("Santas: " + toString(people));
-		System.out.println("Reci..: " + toString(shuffle));
-		System.out.println(references.toString());
+	       }
+               sendMail(people,references);
 
 	}
 
